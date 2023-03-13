@@ -16,27 +16,26 @@ export default function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (!textSearch) {
-      return;
-    }
+    if (textSearch === '') return;
     setStatus('pending');
+
     getImages(textSearch, page)
       .then(data => data.hits)
       .then(response => {
         if (response.length === 0) {
           toast.error("Sorry, we didn't find anything");
-          setStatus({ status: 'idel' });
-        } else {
-          setImages(prevImages => [...prevImages, ...response]);
-          setStatus('resolved');
+          setStatus('idel');
         }
+        setImages(prevImages => [...prevImages, ...response]);
+        setStatus('resolved');
       })
       .catch(error => console.log(error));
   }, [page, textSearch]);
 
-  function handleSubmit(textSearch) {
+  const handleSubmit = textSearch => {
     setTextsearch(textSearch);
-  }
+    setImages([]);
+  };
 
   const hendleMore = () => {
     setPage(page + 1);
