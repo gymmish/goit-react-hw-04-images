@@ -20,18 +20,31 @@ export default function App() {
       return;
     }
     setStatus('pending');
+
     getImages(textSearch, page)
       .then(data => data.hits)
       .then(response => {
         if (response.length === 0) {
           toast.error("Sorry, we didn't find anything");
-          setStatus({ status: 'idel' });
+          setStatus('idel');
         } else {
           setImages(response);
           setStatus('resolved');
         }
       })
       .catch(error => console.log(error));
+
+    if (setPage !== page && page !== 1) {
+      setStatus('pending');
+
+      getImages(textSearch, page)
+        .then(data => data.hits)
+        .then(response => {
+          setImages([...images, ...response]);
+          setStatus('resolved');
+        })
+        .catch(error => console.log(error));
+    }
   }, [page, textSearch]);
 
   const handleSubmit = textSearch => {
