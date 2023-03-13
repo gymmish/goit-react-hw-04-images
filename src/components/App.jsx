@@ -27,7 +27,7 @@ export default function App() {
           toast.error("Sorry, we didn't find anything");
           setStatus({ status: 'idel' });
         } else {
-          setImages(prevImages => [...prevImages, ...response]);
+          setImages(response);
           setStatus('resolved');
         }
       })
