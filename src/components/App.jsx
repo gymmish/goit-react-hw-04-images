@@ -34,9 +34,9 @@ export default function App() {
       .catch(error => console.log(error));
   }, [page, textSearch]);
 
-  const handleSubmit = textSearch => {
+  function handleSubmit(textSearch) {
     setTextsearch(textSearch);
-  };
+  }
 
   const hendleMore = () => {
     setPage(page + 1);
